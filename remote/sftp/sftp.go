@@ -17,13 +17,13 @@ import (
 // AuthMethod : "key", "password", "keyboard".
 // The default ftp port:21, ssh and sftp port:22".
 type Config struct {
-	Host           string
-	Port           string
-	AuthMethod     string
-	User           string
-	Password       string
-	PrivateKeyFile string
-	Timeout        int
+	Host           string        `cfg:"host"`
+	Port           string        `cfg:"port"`
+	AuthMethod     string        `cfg:"auth_method"`
+	User           string        `cfg:"user"`
+	Password       string        `cfg:"pass"`
+	PrivateKeyFile string        `cfg:"private_key"`
+	Timeout        time.Duration `cfg:"timeout"`
 }
 
 type sftpProducer struct {
@@ -47,7 +47,7 @@ func NewClientSSH(c *Config) (*ssh.Client, error) {
 	cfg := &ssh.ClientConfig{
 		User:            c.User,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
-		Timeout:         time.Duration(c.Timeout) * time.Second,
+		Timeout:         c.Timeout,
 	}
 
 	switch c.AuthMethod {

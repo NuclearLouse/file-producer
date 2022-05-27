@@ -22,11 +22,11 @@ type producerFTP struct {
 // Config expected values:
 // The default ftp port:21.
 type Config struct {
-	Host       string
-	Port       string
-	User       string
-	Password   string
-	Timeout    int
+	Host       string        `cfg:"host"`
+	Port       string        `cfg:"port"`
+	User       string        `cfg:"user"`
+	Password   string        `cfg:"pass"`
+	Timeout    time.Duration `cfg:"timeout"`
 	DebugLoger io.Writer
 }
 
@@ -42,7 +42,7 @@ func NewClient(c *Config, hosts ...string) (*goftp.Client, error) {
 	cfg := goftp.Config{
 		User:     c.User,
 		Password: c.Password,
-		Timeout:  time.Duration(c.Timeout) * time.Second,
+		Timeout:  c.Timeout,
 		Logger:   c.DebugLoger,
 		// TLSMode: 2,
 

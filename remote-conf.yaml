@@ -1,0 +1,11 @@
+remote:
+  host: 0.0.0.0
+  port: 22
+  user: username
+  pass: password
+  timeout: 5s
+  
+  # for remote sftp only
+  auth_method: password #or key or keyboard
+  private_key: /etc/.ssh/id_rsa
+  
