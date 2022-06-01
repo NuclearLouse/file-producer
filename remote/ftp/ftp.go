@@ -38,7 +38,7 @@ func NewProducer(client *goftp.Client) (*producerFTP, error) {
 // with an optional port (defaults to 21). Hostnames will be expanded to all the IP addresses they resolve to.
 // The client's connection pool will pick from all the addresses in a round-robin fashion.
 // If you specify multiple hosts, they should be identical mirrors of each other.
-func NewClient(c *Config, hosts ...string) (*goftp.Client, error) {
+func NewClient(c *Config) (*goftp.Client, error) {
 	cfg := goftp.Config{
 		User:     c.User,
 		Password: c.Password,
@@ -47,10 +47,10 @@ func NewClient(c *Config, hosts ...string) (*goftp.Client, error) {
 		// TLSMode: 2,
 
 	}
-	if len(hosts) == 0 {
+	if c.Host == "" {
 		return goftp.DialConfig(cfg, "127.0.0.1")
 	}
-	return goftp.DialConfig(cfg, hosts...)
+	return goftp.DialConfig(cfg, c.Host)
 }
 
 func (p *producerFTP) Ping(_ string) error {
